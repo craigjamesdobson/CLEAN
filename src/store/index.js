@@ -11,27 +11,27 @@ export default new Vuex.Store({
     chores: [
       {
         _id: uuidv4(),
-        task: "Clean Living Room",
+        task: "Test Chore 1",
         room: "Living Room",
         month: 3,
-        date: "21/4/2020",
+        date: "22/4/2020",
         dateCreated: new Date(),
         isCompleted: false,
         isEditing: false
       },
       {
         _id: uuidv4(),
-        task: "Clean Living Room 2",
+        task: "Test Chore 2",
         room: "Living Room",
         month: 3,
-        date: "21/4/2020",
+        date: "22/4/2020",
         dateCreated: new Date(),
         isCompleted: true,
         isEditing: false
       },
       {
         _id: uuidv4(),
-        task: "Clean Living Room 3",
+        task: "Test Chore 3",
         room: "Living Room",
         month: 3,
         date: "21/4/2020",
@@ -41,10 +41,10 @@ export default new Vuex.Store({
       },
       {
         _id: uuidv4(),
-        task: "Clean Living Room 4",
+        task: "Test Chore 4",
         room: "Living Room",
         month: 3,
-        date: "19/4/2020",
+        date: "23/4/2020",
         dateCreated: new Date(),
         isCompleted: false,
         isEditing: false
