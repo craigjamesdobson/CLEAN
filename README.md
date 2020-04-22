@@ -1,4 +1,4 @@
-# clean
+# CLEAN.
 
 ## Project setup
 ```
