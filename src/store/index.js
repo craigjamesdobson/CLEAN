@@ -41,6 +41,16 @@ export default new Vuex.Store({
       },
       {
         _id: uuidv4(),
+        task: "Test Chore 5",
+        room: "Living Room",
+        month: 3,
+        date: "23/4/2020",
+        dateCreated: new Date(),
+        isCompleted: false,
+        isEditing: false
+      },
+      {
+        _id: uuidv4(),
         task: "Test Chore 4",
         room: "Living Room",
         month: 3,
