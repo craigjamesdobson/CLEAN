@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto mt-2 px-2">
-    <p v-if="filteredChores.length < 1">
+    <p class="py-2" v-if="filteredChores.length < 1">
       There are currently no chores for this day
     </p>
     <div v-else>
