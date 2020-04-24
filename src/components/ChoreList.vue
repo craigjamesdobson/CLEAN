@@ -81,7 +81,7 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 import { ContentLoader } from "vue-content-loader";
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 const currentDate = new Date(),
   currentDay = currentDate.getDate().toString();
@@ -122,6 +122,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(["setChores"]),
+
     showContent() {
       this.contentLoaded = true;
     },
@@ -142,11 +144,13 @@ export default {
           choreInput.select();
         });
       }
+      this.setChores(this.chores);
     },
 
     deleteChore(chore) {
       const deletedChore = this.chores.findIndex(c => c._id === chore._id);
       this.chores.splice(deletedChore, 1);
+      this.setChores(this.chores);
     },
 
     addChore() {

@@ -1,76 +1,45 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { v4 as uuidv4 } from "uuid";
-import { SET_DATE } from "./mutation-types";
+import { SET_DATE, GET_CHORES, SET_CHORES } from "./mutation-types";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     activeDate: "",
-    chores: [
-      {
-        _id: uuidv4(),
-        task: "Test Chore 1",
-        room: "Living Room",
-        month: 3,
-        date: "22/4/2020",
-        dateCreated: new Date(),
-        isCompleted: false,
-        isEditing: false
-      },
-      {
-        _id: uuidv4(),
-        task: "Test Chore 2",
-        room: "Living Room",
-        month: 3,
-        date: "22/4/2020",
-        dateCreated: new Date(),
-        isCompleted: true,
-        isEditing: false
-      },
-      {
-        _id: uuidv4(),
-        task: "Test Chore 3",
-        room: "Living Room",
-        month: 3,
-        date: "21/4/2020",
-        dateCreated: new Date(),
-        isCompleted: false,
-        isEditing: false
-      },
-      {
-        _id: uuidv4(),
-        task: "Test Chore 5",
-        room: "Living Room",
-        month: 3,
-        date: "23/4/2020",
-        dateCreated: new Date(),
-        isCompleted: false,
-        isEditing: false
-      },
-      {
-        _id: uuidv4(),
-        task: "Test Chore 4",
-        room: "Living Room",
-        month: 3,
-        date: "23/4/2020",
-        dateCreated: new Date(),
-        isCompleted: false,
-        isEditing: false
-      }
-    ]
+    chores: []
   },
 
   mutations: {
     [SET_DATE](state, date) {
       state.activeDate = date;
+    },
+
+    [GET_CHORES](state, data) {
+      state.chores = data;
+    },
+
+    [SET_CHORES](state, data) {
+      state.chores = data;
     }
   },
 
   actions: {
     updateDate({ commit }, date) {
       commit("SET_DATE", date);
+    },
+
+    getChores({ commit }) {
+      const choresData = JSON.parse(localStorage.getItem("chores"));
+      if (choresData !== null) {
+        commit("GET_CHORES", choresData);
+      }
+    },
+
+    setChores({ commit }, data) {
+      const chores = JSON.stringify(data);
+      localStorage.setItem("chores", chores);
+      commit("SET_CHORES", data);
     }
   },
 

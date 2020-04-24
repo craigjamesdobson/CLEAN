@@ -28,6 +28,7 @@ export default {
 
   mounted() {
     this.setCurrentDate();
+    this.getChores();
   },
 
   computed: {
@@ -37,7 +38,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["updateDate"]),
+    ...mapActions(["updateDate", "getChores"]),
 
     setCurrentDate() {
       const currentDate = new Date(),
