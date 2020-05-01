@@ -1,8 +1,21 @@
 <template>
   <div class="container mx-auto">
-    <h1 class="text-4xl mt-4 leading-none">
-      {{ new Date().toLocaleString("en-EN", { month: "long" }) }}
-    </h1>
+    <select
+      class="p-3 my-2 text-2xl"
+      name=""
+      id=""
+      v-model="selectedMonth"
+      @change="getDaysInMonth(selectedMonth, currentYear, 0)"
+    >
+      <option
+        :selected="index == new Date().getMonth()"
+        v-for="(date, index) in monthDates"
+        :key="`date_${index}`"
+        :value="index"
+      >
+        {{ date }}
+      </option>
+    </select>
     <h2 class="mb-4 text-gray-500">{{ this.activeDate }}</h2>
     <flickity
       ref="flickity"
@@ -33,9 +46,7 @@ import Flickity from "vue-flickity";
 import { mapActions, mapState } from "vuex";
 
 const currentDate = new Date(),
-  currentDay = currentDate.getDate().toString(),
-  currentMonth = currentDate.getMonth(),
-  currentYear = currentDate.getFullYear();
+  currentDay = currentDate.getDate();
 
 export default {
   name: "DateList",
@@ -48,41 +59,43 @@ export default {
       contentLoaded: false,
       ad: this.activeDate,
       dates: [],
+      currentDay: 5,
+      selectedMonth: new Date().getMonth(),
+      currentMonth: new Date().getMonth(),
+      currentYear: new Date().getFullYear(),
       flickityOptions: {
         initialIndex: currentDay - 1,
         pageDots: false,
         prevNextButtons: false,
         wrapAround: true
-        // any options from Flickity can be used
       }
     };
   },
 
-  created() {
-    this.getDaysInMonth(currentMonth, currentYear);
-  },
-
   mounted() {
-    const vm = this;
-
-    vm.$nextTick(() => {
-      this.$refs.flickity.on("select", function() {
-        vm.ad = vm.$refs.flickity.selectedElement().dataset.date;
-        vm.updateSelectedDate();
-      });
-    });
+    this.getDaysInMonth(this.selectedMonth, this.currentYear, currentDay - 1);
   },
 
   computed: {
     ...mapState({
-      activeDate: "activeDate"
+      activeDate: "activeDate",
+      monthDates: "dates"
     })
   },
 
   methods: {
     ...mapActions(["updateDate"]),
 
-    getDaysInMonth(month, year) {
+    onFlickitySlide() {
+      const vm = this;
+
+      this.$refs.flickity.on("select", function() {
+        vm.ad = vm.$refs.flickity.selectedElement().dataset.date;
+        vm.updateSelectedDate();
+      });
+    },
+
+    getDaysInMonth(month, year, initialIndex) {
       let date = new Date(year, month, 1);
       let days = [];
 
@@ -99,6 +112,7 @@ export default {
 
         const isCurrentDay =
           newDateSplit[2] === currentDay.toString() ? true : false;
+
         const newDateObj = {
           ...newDateSplit,
           date: `${d}/${m}/${y}`,
@@ -107,9 +121,21 @@ export default {
         };
 
         days.push(newDateObj);
+
         date.setDate(date.getDate() + 1);
       }
+
       this.dates = [days];
+
+      this.$nextTick(() => {
+        this.$refs.flickity.rerender();
+
+        this.onFlickitySlide();
+        this.$refs.flickity.select(initialIndex);
+
+        this.ad = `1/${this.selectedMonth + 1}/${this.currentYear}`;
+        this.updateSelectedDate();
+      });
     },
 
     updateSelectedDate() {

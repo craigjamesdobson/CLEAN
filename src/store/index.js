@@ -7,7 +7,21 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     activeDate: "",
-    chores: []
+    chores: [],
+    dates: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
   },
 
   mutations: {
